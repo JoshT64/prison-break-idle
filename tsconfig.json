@@ -3,7 +3,6 @@
     "target": "ESNext",
     "module": "commonjs",
     "allowJs": true,
-    "jsx": "react-jsx",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "noImplicitAny": true,

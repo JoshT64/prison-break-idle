@@ -1,7 +1,0 @@
-This font is a Derivative of the SIL Open Font Licensed open source Font, Play.
-
-Changelog:
-
-
-New Name; "Gamestation", modified Ampersand, Dollar Sign, Number 3, number 4, number 5, Question Mark, modified uppercase G, 
-plus new weights and styles.
