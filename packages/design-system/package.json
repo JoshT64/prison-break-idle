@@ -1,0 +1,196 @@
+{
+  "name": "@prison-break-idle/design-system",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "module": "./dist/design-system.js",
+  "typings": "./dist/typings/index.d.ts",
+  "exports": {
+    "./tokens": "./src/styles/core-styles/core-styles.scss",
+    "./global-styles": "./src/styles/global-styles/global-styles.scss",
+    "./builded": {
+      "module": "./dist/design-system.js",
+      "types": "./dist/typings/index.d.ts"
+    },
+    "./dist": {
+      "module": "./dist/design-system.js",
+      "types": "./dist/typings/index.d.ts"
+    },
+    ".": {
+      "module": "./index.ts",
+      "types": "./dist/typings/index.d.ts"
+    },
+    "./assets/*": "./src/assets/*",
+    "./components/*": "./src/components/*"
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite build --watch --force --emptyOutDir false",
+    "start": "yarn storybook",
+    "build-vercel": "npx nx run @pypestream/vite-plugin-svg-sprite:build && npx nx build-storybook",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "lint": "nx run-many --targets=lint:code,lint:styles,lint:stylelint --projects=@pypestream/design-system",
+    "lint:code": "eslint --ext .tsx,.ts src/",
+    "lint:styles": "prettier --write ./src/**/*.scss",
+    "lint:stylelint": "stylelint ./**/*.scss",
+    "analyze": "wca analyze src --format vscode --outFile ./dist/vscode-html-custom-data.json",
+    "docs": "yarn run docs:vscode --silent",
+    "docs:md": "wca analyze src/**/*.wc.ts --format markdown --outFiles {dir}/README.md --features cssproperty",
+    "docs:vscode": "wca analyze src/**/*.wc.ts --format vscode --outFile ./dist/vscode-html-custom-data.json --verbose false",
+    "docs:schema": "wca analyze src/**/*.wc.ts --format json --outFiles {dir}/{tagname}.schema.json --verbose false",
+    "cypress-open": "cypress open",
+    "test-vitest": "vitest run --reporter=verbose",
+    "test": "yarn test-vitest && yarn test-components && yarn test-coverage"
+  },
+  "dependencies": {
+    "react-toastify": "^9.1.1",
+    "sass-mq": "^6.0.0",
+    "svg-baker-runtime": "^1.4.7",
+    "vitest": "^0.31.0",
+    "clsx": "2.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": ">=6.5.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.1.0-rc.0",
+    "@storybook/addon-links": "^7.1.0-rc.0",
+    "@storybook/addons": "^7.1.0-rc.0",
+    "@storybook/builder-vite": "^7.1.0-rc.0",
+    "@storybook/theming": "^7.1.0-rc.0",
+    "@storybook/web-components": "^7.1.0-rc.0",
+    "@storybook/web-components-vite": "^7.1.0-rc.0",
+    "@types/react-dom": "^18.0.11",
+    "css-loader": "^6.7.2",
+    "nx": "15.7.1",
+    "path": "^0.12.7",
+    "postcss": "^8.4.25",
+    "postcss-scss": "^4.0.6",
+    "prettier": "^2.8.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": ">=6.5.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.63.6",
+    "sass-loader": "^13.2.0",
+    "simplebar": "^6.2.5",
+    "storybook": "^7.1.0-rc.0",
+    "storybook-addon-themes": "^6.1.0",
+    "style-loader": "^3.3.1",
+    "ts-lit-plugin": "^1.2.1",
+    "typescript": "^5.2.2",
+    "vite": "^3.2.3",
+    "vite-plugin-dts": "^1.7.1",
+    "vite-plugin-istanbul": "^4.1.0",
+    "web-component-analyzer": "^2.0.0-next.4",
+    "webpack": "^5.75.0"
+  },
+  "nx": {
+    "namedInputs": {
+      "styles": [
+        "{projectRoot}/**/*.scss"
+      ],
+      "typescript": [
+        "{projectRoot}/**/*.ts",
+        "{projectRoot}/**/*.tsx"
+      ]
+    },
+    "targets": {
+      "dev": {
+        "dependsOn": [
+          {
+            "projects": "dependencies",
+            "target": "build"
+          }
+        ],
+        "outputs": [
+          "{projectRoot}/dist"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/dist"
+        ]
+      },
+      "lint:stylelint": {
+        "inputs": [
+          "styles"
+        ]
+      },
+      "lint:code": {
+        "inputs": [
+          "typescript"
+        ]
+      },
+      "lint:styles": {
+        "inputs": [
+          "styles"
+        ]
+      },
+      "start": {
+        "dependsOn": [
+          {
+            "projects": "dependencies",
+            "target": "build"
+          }
+        ],
+        "outputs": [
+          "{projectRoot}/dist"
+        ]
+      },
+      "build-storybook": {
+        "dependsOn": [
+          {
+            "projects": "dependencies",
+            "target": "build"
+          }
+        ],
+        "outputs": [
+          "{projectRoot}/storybook-static"
+        ]
+      }
+    },
+    "tasksRunnerOptions": {
+      "default": {
+        "runner": "nx/tasks-runners/default",
+        "options": {
+          "cacheableOperations": [
+            "build",
+            "analyze",
+            "build-storybook",
+            "lint",
+            "lint:code",
+            "lint:styles",
+            "lint:stylelint"
+          ]
+        }
+      }
+    },
+    "includedScripts": [
+      "build-storybook",
+      "build-vercel",
+      "docs",
+      "build",
+      "cypress-open",
+      "dev",
+      "lint",
+      "lint:code",
+      "lint:styles",
+      "lint:stylelint",
+      "postinstall",
+      "start",
+      "test-components",
+      "test"
+    ]
+  }
+}

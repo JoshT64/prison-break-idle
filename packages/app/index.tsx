@@ -1,10 +1,12 @@
-import React from 'react';
 import { MainMenu } from './src/components/Main-Menu';
 import { Prison } from './src/components/Game/prison';
-import { useGameStore, GameStore } from './src/store/store';
+import { useGameStore, GameStore } from './store/store';
 
 const App = () => {
   const isGameStarted = useGameStore((state: GameStore) => state.isGameStarted);
+
+  console.log('App');
+
   return isGameStarted ? <Prison /> : <MainMenu />;
 };
 

@@ -1,84 +1,60 @@
 {
-  "name": "my-new-app",
-  "productName": "my-new-app",
-  "version": "1.0.0",
+  "name": "@prison-break-idle/main",
+  "productName": "prison-break-idle",
+  "version": "0.1.0",
+  "private": true,
   "description": "My Electron application description",
-  "main": ".vite/build/main.js",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "start:app": "nx run @prison-break-idle/app:start",
+    "build:app": "nx run @prison-break-idle/app:build",
+    "start:ds": "nx run @prison-break-idle/design-system:start",
+    "build:ds": "nx run @prison-break-idle/design-system:build",
+    "package": "nx exec -- electron-forge package",
+    "make": "nx exec -- electron-forge make",
+    "publish": "nx exec -- electron-forge publish",
+    "lint": "nx exec -- eslint --ext .ts,.tsx ."
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "keywords": [],
   "author": "josh",
   "license": "MIT",
   "devDependencies": {
-    "@electron-forge/cli": "^6.4.2",
-    "@electron-forge/maker-deb": "^6.4.2",
-    "@electron-forge/maker-rpm": "^6.4.2",
-    "@electron-forge/maker-squirrel": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.2",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
-    "@electron-forge/plugin-vite": "^6.4.2",
-    "@electron-forge/publisher-github": "^6.4.2",
-    "@types/react": "^18.2.22",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
-    "electron": "26.2.1",
-    "eslint": "^8.0.1",
-    "eslint-plugin-import": "^2.25.0",
-    "sass": "^1.68.0",
-    "ts-node": "^10.0.0",
-    "typescript": "~4.5.4"
+    "@nrwl/jest": "13.10.6",
+    "@nx/react": "16.8.1",
+    "@types/jest": "27.0.2",
+    "autoprefixer": "10.4.13",
+    "electron": "^18.2.3",
+    "exitzero": "^1.0.1",
+    "jest": "27.2.3",
+    "nx": "16.8.1",
+    "nx-cloud": "latest",
+    "nx-electron": "^13.1.1",
+    "postcss": "8.4.21",
+    "tailwindcss": "3.2.7",
+    "ts-jest": "27.0.5"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.3.3",
-    "zustand": "^4.4.1"
+    "tslib": "^2.0.0"
   },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "./assets/icon.png"
+  "nx": {
+    "targets": {
+      "package": {
+        "outputs": [
+          "{projectRoot}/out"
+        ]
       },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "my_new_app"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "erikhofer",
-              "name": "electron-publish-example"
-            }
-          }
-        }
-      ]
+      "make": {
+        "outputs": [
+          "{projectRoot}/out"
+        ]
+      },
+      "publish": {
+        "outputs": [
+          "{projectRoot}/out"
+        ]
+      }
     }
   }
 }

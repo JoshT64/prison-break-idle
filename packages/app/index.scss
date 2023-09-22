@@ -1,10 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @font-face {
   font-family: 'Gamestation';
-  src: url('./fonts/GamestationDisplay-zexG.otf');
+  src: url('../design-system/fonts/GamestationDisplay-zexG.otf');
 }
 
 html {

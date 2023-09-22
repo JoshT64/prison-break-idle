@@ -1,0 +1,18 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx-cloud",
+      "options": {
+        "cacheableOperations": ["package", "make", "publish", "lint"],
+        "accessToken": "NTYxZWUxMTQtNDNhMi00OTAyLWE2MTktYTRmMDQ5NDdiNTVkfHJlYWQtd3JpdGU="
+      }
+    }
+  },
+  "affected": {
+    "defaultBase": "main"
+  },
+  "cli": {
+    "defaultCollection": "nx-electron"
+  },
+  "defaultProject": "@prison-break-idle/main"
+}

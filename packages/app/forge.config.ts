@@ -12,7 +12,7 @@ const config: ForgeConfig = {
       config: {
         repository: {
           owner: 'JoshT64',
-          name: 'prison-break-idle',
+          name: '@prison-break-idle',
         },
         prerelease: true,
       },
@@ -26,6 +26,7 @@ const config: ForgeConfig = {
     new MakerRpm({}),
     new MakerDeb({}),
   ],
+
   plugins: [
     new VitePlugin({
       // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
