@@ -26,9 +26,8 @@
  * ```
  */
 
-import './index.css';
+import './index.scss';
+import '@prison-break-idle/design-system';
 import '../app';
 
-console.log(
-  '👋 This message is being logged by "renderer.ts", included via Vite'
-);
+console.log('👋 This message is beingd by "renderer.ts", included via Vite');

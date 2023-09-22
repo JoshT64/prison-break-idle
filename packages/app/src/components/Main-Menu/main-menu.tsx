@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useGameStore, GameStore } from '../../store/store';
+import { useGameStore, GameStore } from '../../../store/store';
+import { Button } from '@prison-break-idle/design-system';
 
 export const MainMenu = () => {
   const saveData = true;
@@ -13,15 +13,19 @@ export const MainMenu = () => {
     <div className='c-main-menu--container'>
       <h1 className='c-main-menu--title'>Prison Break Idle</h1>
       <div className='c-main-menu--button-container'>
-        <button onClick={startGame} className='c-main-menu--button'>
-          New Game
-        </button>
+        <Button onClick={startGame}>New Game</Button>
         {saveData && (
-          <button disabled={!saveData} className='c-main-menu--button'>
+          <Button
+            onClick={startGame}
+            disabled={!saveData}
+            className='c-main-menu--button'
+          >
             Load Game
-          </button>
+          </Button>
         )}
-        <button className='c-main-menu--button'>Options</button>
+        <Button onClick={startGame} className='c-main-menu--button'>
+          Options
+        </Button>
       </div>
     </div>
   );

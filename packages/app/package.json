@@ -1,0 +1,122 @@
+{
+  "name": "@prison-break-idle/app",
+  "version": "0.1.0",
+  "type": "commonjs",
+  "main": ".vite/build/main.js",
+  "author": "josh",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron-forge start",
+    "build": "vite build && electron-builder",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
+  },
+  "dependencies": {
+    "@prison-break-idle/design-system": "^0.1.0",
+    "nx-electron": "^13.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.4.1"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
+    "@electron-forge/plugin-vite": "^6.4.2",
+    "@electron-forge/publisher-github": "^6.4.2",
+    "electron-builder": "24.6.4",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "electron": "26.2.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "eslint": "^8.0.1",
+    "eslint-plugin-import": "^2.25.0",
+    "sass": "^1.68.0",
+    "ts-node": "^10.0.0",
+    "typescript": "~4.5.4"
+  },
+  "nx": {
+    "namedInputs": {
+      "default": [
+        "{projectRoot}/**/*"
+      ]
+    },
+    "tasksRunnerOptions": {
+      "default": {
+        "runner": "nx/tasks-runners/default",
+        "options": {
+          "cacheableOperations": [
+            "build"
+          ]
+        }
+      }
+    },
+    "targets": {
+      "build": {
+        "dependsOn": [
+          {
+            "projects": "dependencies",
+            "target": "uncached-build"
+          },
+          {
+            "inputs": [
+              "default"
+            ],
+            "outputs": [
+              "{workspaceRoot}/dist"
+            ],
+            "projects": "dependencies",
+            "target": "build"
+          }
+        ]
+      },
+      "test-e2e": {
+        "dependsOn": [
+          {
+            "inputs": [
+              "default"
+            ],
+            "outputs": [
+              "{workspaceRoot}/dist"
+            ],
+            "projects": "dependencies",
+            "target": "build"
+          }
+        ]
+      },
+      "start": {
+        "inputs": [
+          "default"
+        ],
+        "outputs": [],
+        "dependsOn": [
+          {
+            "projects": "dependencies",
+            "target": "uncached-build"
+          },
+          {
+            "projects": "dependencies",
+            "target": "build"
+          }
+        ]
+      }
+    },
+    "includedScripts": [
+      "build",
+      "start",
+      "test",
+      "lint",
+      "test-e2e",
+      "serve",
+      "postinstall",
+      "cypress-open",
+      "test-vitest"
+    ]
+  }
+}
