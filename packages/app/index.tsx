@@ -5,8 +5,6 @@ import { useGameStore, GameStore } from './store/store';
 const App = () => {
   const isGameStarted = useGameStore((state: GameStore) => state.isGameStarted);
 
-  console.log('App');
-
   return isGameStarted ? <Prison /> : <MainMenu />;
 };
 

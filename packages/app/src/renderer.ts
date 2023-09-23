@@ -30,4 +30,4 @@ import './index.scss';
 import '@prison-break-idle/design-system';
 import '../app';
 
-console.log('👋 This message is beingd by "renderer.ts", included via Vite');
+console.log('👋 Renderer Started.');
