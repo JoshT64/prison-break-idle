@@ -1,11 +1,9 @@
-import { MainMenu } from './src/components/Main-Menu';
-import { Prison } from './src/components/Game/prison';
+import { MainMenu } from './src/components/main-menu';
+import { Prison } from './src/components/game';
 import { useGameStore, GameStore } from './store/store';
 
 const App = () => {
   const isGameStarted = useGameStore((state: GameStore) => state.isGameStarted);
-
-  console.log('App');
 
   return isGameStarted ? <Prison /> : <MainMenu />;
 };

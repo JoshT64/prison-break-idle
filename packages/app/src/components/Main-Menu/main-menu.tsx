@@ -7,8 +7,6 @@ export const MainMenu = () => {
   const startGame = useGameStore((state: GameStore) => state.startGame);
   const isGameStarted = useGameStore((state: GameStore) => state.isGameStarted);
 
-  console.log(isGameStarted);
-
   return (
     <div className='c-main-menu--container'>
       <h1 className='c-main-menu--title'>Prison Break Idle</h1>
