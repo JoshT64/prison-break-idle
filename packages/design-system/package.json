@@ -47,11 +47,11 @@
     "test": "yarn test-vitest && yarn test-components && yarn test-coverage"
   },
   "dependencies": {
+    "@storybook/react": "^7.4.4",
+    "@storybook/react-vite": "^7.4.4",
+    "clsx": "2.0.0",
     "react-toastify": "^9.1.1",
-    "sass-mq": "^6.0.0",
-    "svg-baker-runtime": "^1.4.7",
-    "vitest": "^0.31.0",
-    "clsx": "2.0.0"
+    "sass-mq": "^6.0.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -59,15 +59,15 @@
     "react-router-dom": ">=6.5.0"
   },
   "devDependencies": {
+    "@nx/storybook": "^16.9.0",
     "@storybook/addon-essentials": "^7.1.0-rc.0",
     "@storybook/addon-links": "^7.1.0-rc.0",
     "@storybook/addons": "^7.1.0-rc.0",
     "@storybook/builder-vite": "^7.1.0-rc.0",
     "@storybook/theming": "^7.1.0-rc.0",
-    "@storybook/web-components": "^7.1.0-rc.0",
-    "@storybook/web-components-vite": "^7.1.0-rc.0",
     "@types/react-dom": "^18.0.11",
     "css-loader": "^6.7.2",
+    "globby": "^13.2.2",
     "nx": "15.7.1",
     "path": "^0.12.7",
     "postcss": "^8.4.25",
@@ -87,9 +87,6 @@
     "ts-lit-plugin": "^1.2.1",
     "typescript": "^5.2.2",
     "vite": "^3.2.3",
-    "vite-plugin-dts": "^1.7.1",
-    "vite-plugin-istanbul": "^4.1.0",
-    "web-component-analyzer": "^2.0.0-next.4",
     "webpack": "^5.75.0"
   },
   "nx": {

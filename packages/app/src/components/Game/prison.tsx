@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameStore, GameStore } from '../../../store/store';
 import { Button } from '@prison-break-idle/design-system';
 
