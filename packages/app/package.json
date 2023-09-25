@@ -1,6 +1,6 @@
 {
   "name": "@prison-break-idle/app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "commonjs",
   "main": ".vite/build/main.js",
   "author": "josh",
@@ -13,7 +13,9 @@
     "publish": "electron-forge publish"
   },
   "dependencies": {
-    "@prison-break-idle/design-system": "^0.1.0",
+    "@react-oauth/google": "^0.11.1",
+    "firebase": "^10.4.0",
+    "jwt-decode": "^3.1.2",
     "nx-electron": "^13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,12 +30,12 @@
     "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
     "@electron-forge/plugin-vite": "^6.4.2",
     "@electron-forge/publisher-github": "^6.4.2",
-    "electron-builder": "24.6.4",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "electron": "26.2.1",
+    "electron-builder": "24.6.4",
     "electron-squirrel-startup": "^1.0.0",
     "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
@@ -116,7 +118,10 @@
       "serve",
       "postinstall",
       "cypress-open",
-      "test-vitest"
+      "test-vitest",
+      "package",
+      "make",
+      "publish"
     ]
   }
 }

@@ -1,11 +1,32 @@
+@font-face {
+  font-family: 'Gamestation';
+  src: url('../../../fonts/GamestationDisplay-zexG.otf');
+}
+
+html {
+  font-family: 'Gamestation', sans-serif;
+}
+
 body {
-  background-color: #fff;
-  color: #000;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-family: 'Gamestation', sans-serif;
+  color: #fff;
+  font-size: 1.5rem;
   line-height: 1.5;
-  margin: 0;
   padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+.header {
+  background-color: blue;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
 }
