@@ -10,14 +10,20 @@
     "build:app": "nx run @prison-break-idle/app:build",
     "start:ds": "nx run @prison-break-idle/design-system:start",
     "build:ds": "nx run @prison-break-idle/design-system:build",
-    "package": "nx exec -- electron-forge package",
-    "make": "nx exec -- electron-forge make",
-    "publish": "nx exec -- electron-forge publish",
+    "package": "nx run @prison-break-idle/app:package",
+    "make": "nx run @prison-break-idle/app:make",
+    "publish": "nx run @prison-break-idle/app:publish",
     "lint": "nx exec -- eslint --ext .ts,.tsx ."
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@prison-break-idle/**"
+    ]
+  },
+
   "keywords": [],
   "author": "josh",
   "license": "MIT",
