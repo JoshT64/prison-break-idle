@@ -12,7 +12,6 @@ const __dirname = dirname(__filename);
 
 type ViteConfig = UserConfig;
 
-// @todo- Need to import this from @pypestream/utils (Need to check why that import fails currently)
 const isProduction = process.env.NODE_ENV === 'production';
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,11 +28,11 @@ export default defineConfig({
       formats: ['es'],
       fileName: 'design-system',
     },
-    rollupOptions: {
-      treeshake: true,
-      // bundling @rjsf separately fixes the `vite build --watch` command from hanging!
-      external: [/^@rjsf\/core/, 'react', 'react-dom'],
-    },
+    // rollupOptions: {
+    //   treeshake: true,
+    //   // bundling @rjsf separately fixes the `vite build --watch` command from hanging!
+    //   external: [/^@rjsf\/core/, 'react', 'react-dom'],
+    // },
   },
   server: {
     https: !process.env?.VITEST,
