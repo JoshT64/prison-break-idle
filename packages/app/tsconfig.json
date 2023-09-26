@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "types": ["vite/client"],
     "paths": {
-      "*": ["*", "*.tsx"]
+      "*": ["*.tsx"]
     }
   },
   "include": ["src"]
