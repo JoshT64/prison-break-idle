@@ -7,7 +7,6 @@ const App = () => {
   const isGameStarted = useGameStore((state: GameStore) => state.isGameStarted);
   const isLoggedIn = useGameStore((state: GameStore) => state.isLoggedIn);
 
-  console.log(isGameStarted);
   switch (isLoggedIn) {
     case false:
       return <Login />;

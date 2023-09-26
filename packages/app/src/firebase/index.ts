@@ -27,7 +27,9 @@ export const signIn = (token: string) => {
   signInWithCredential(auth, credential)
     .then(async (userCredential) => {
       const user = userCredential.user;
-      console.log('User signed in:', user);
+      console.log('User signed in:', user.uid);
+      const token = await user.getIdToken();
+      localStorage.setItem('googleCredential', token);
 
       await addUserToFirestore(user.uid, user.email);
     })
@@ -52,8 +54,6 @@ const addUserToFirestore = async (uid: string, email: string) => {
       uid,
       email,
     });
-
-    localStorage.setItem('googleCredential', JSON.stringify(uid));
   } catch (error) {
     console.error('Error adding user to Firestore:', error);
   }
