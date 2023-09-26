@@ -7,6 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "electron-forge start",
+    "start:vite": "vite dev",
+    "build:vite": "vite build",
     "build": "vite build && electron-builder",
     "package": "electron-forge package",
     "make": "electron-forge make",
