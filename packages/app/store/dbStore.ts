@@ -32,7 +32,7 @@ export const useDbStore = create<DbStore>((set) => {
 
       if (accountSnapshot.exists()) {
         const accountData = accountSnapshot.data();
-        console.log('Fetched account data:', accountData);
+        console.log('Fetched account data');
         set({ accountDetails: { picture: accountData.picture || '' } });
       } else {
         console.log('Account data does not exist.');

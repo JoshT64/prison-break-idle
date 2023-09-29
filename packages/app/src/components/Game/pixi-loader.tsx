@@ -52,7 +52,7 @@ const PixiLoader = () => {
   }
 
   return (
-    <Stage width={stageWidth} x height={stageHeight}>
+    <Stage width={stageWidth} height={stageHeight}>
       <Container>{tiles}</Container>
     </Stage>
   );

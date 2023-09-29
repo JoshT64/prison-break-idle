@@ -7,7 +7,7 @@
   "scripts": {
     "start": "yarn nx run-many --target=start --maxParallel=2",
     "start:app": "nx run @prison-break-idle/app:start",
-    "build:app": "nx run @prison-break-idle/app:build",
+    "build": "nx run @prison-break-idle/app:build",
     "start:ds": "nx run @prison-break-idle/design-system:start",
     "build:ds": "nx run @prison-break-idle/design-system:build",
     "package": "nx run @prison-break-idle/app:package",
@@ -23,7 +23,6 @@
       "**/@prison-break-idle/**"
     ]
   },
-
   "keywords": [],
   "author": "josh",
   "license": "MIT",
