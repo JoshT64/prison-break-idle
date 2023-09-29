@@ -1,17 +1,14 @@
 import { clsx } from 'clsx';
-import './container.scss';
+import './avatar.scss';
 
 interface AvatarProps extends React.ImgHTMLAttributes<HTMLSpanElement> {
   size?: 'small' | 'medium' | 'large' | 'xlarge' | '2xlarge' | '3xlarge';
-  label: '';
+  label?: string;
 }
 
-export const Avatar = (
-  props: AvatarProps,
-  { size, src, label }: AvatarProps
-) => {
+export const Avatar = ({ size, src, label }: AvatarProps) => {
   return (
-    <span {...props} className={clsx(`c-avatar, c-avatar--size-${size}`)}>
+    <span className={clsx(`c-avatar c-avatar--size-${size}`)}>
       <img className='c-avatar__img' src={src} alt={label} />
     </span>
   );

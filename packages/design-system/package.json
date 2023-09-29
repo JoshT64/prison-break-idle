@@ -30,10 +30,10 @@
   "scripts": {
     "dev": "vite build --watch --force --emptyOutDir false",
     "start": "yarn storybook",
-    "build-vercel": "npx nx run @pypestream/vite-plugin-svg-sprite:build && npx nx build-storybook",
+    "build-vercel": "npx nx run && npx nx build-storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "lint": "nx run-many --targets=lint:code,lint:styles,lint:stylelint --projects=@pypestream/design-system",
+    "lint": "nx run-many --targets=lint:code,lint:styles,lint:stylelint --projects=@prison-break-idle/design-system",
     "lint:code": "eslint --ext .tsx,.ts src/",
     "lint:styles": "prettier --write ./src/**/*.scss",
     "lint:stylelint": "stylelint ./**/*.scss",

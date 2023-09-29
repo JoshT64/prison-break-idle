@@ -1,20 +1,34 @@
 import { MainMenu } from './src/components/main-menu';
-import { Prison } from './src/components/game';
 import { useGameStore, GameStore } from './store/store';
 import { Login } from './src/components/login';
+import { useDbStore, DbStore } from './store/dbStore';
+import { Loader } from './src/components/loader';
+import PixiLoader from './src/components/game/pixi-loader';
 
 const App = () => {
   const isGameStarted = useGameStore((state: GameStore) => state.isGameStarted);
   const isLoggedIn = useGameStore((state: GameStore) => state.isLoggedIn);
+  const accountDetails = useDbStore((state: DbStore) => state.accountDetails);
 
-  switch (isLoggedIn) {
-    case false:
+  // Todo: Add React-router and route based on url to these pages? I think so
+
+  const renderContent = () => {
+    if (!isLoggedIn) {
       return <Login />;
-    case true:
-      return isGameStarted ? <Prison /> : <MainMenu />;
-    default:
-      return <div>Something went wrong</div>;
-  }
+    }
+
+    if (!accountDetails) {
+      return <Loader />;
+    }
+
+    if (isGameStarted) {
+      return <PixiLoader />;
+    }
+
+    return <MainMenu />;
+  };
+
+  return renderContent();
 };
 
 export default App;

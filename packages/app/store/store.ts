@@ -3,7 +3,6 @@ import { create } from 'zustand';
 
 const token = localStorage.getItem('googleCredential');
 
-// On the client side
 const verifyGoogleCredential = async () => {
   if (!token) return false;
   try {
@@ -39,7 +38,6 @@ export type GameStore = {
   isLoggedIn: boolean;
   login?: (token: string) => void;
   logout?: () => void;
-  accountDetails: {};
 };
 
 export const useGameStore = create((set) => ({

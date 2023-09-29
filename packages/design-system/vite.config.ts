@@ -1,5 +1,5 @@
 import { defineConfig, UserConfig } from 'vite';
-import { resolve, join, dirname, sep, basename } from 'path';
+import { resolve, join, dirname, basename } from 'path';
 import { writeFileSync } from 'fs';
 import prettier from 'prettier';
 import chokidar from 'chokidar';
@@ -7,6 +7,7 @@ import { globby } from 'globby';
 import { fileURLToPath } from 'url';
 
 // Cypress workaround
+/* @vite-ignore */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -21,6 +22,10 @@ export default defineConfig({
     teardownTimeout: 1000,
     setupFiles: ['vitest.setup.ts'],
   },
+  esbuild: {
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment',
+  },
   envPrefix: ['DS', 'FE'],
   build: {
     lib: {
@@ -28,14 +33,13 @@ export default defineConfig({
       formats: ['es'],
       fileName: 'design-system',
     },
-    // rollupOptions: {
-    //   treeshake: true,
-    //   // bundling @rjsf separately fixes the `vite build --watch` command from hanging!
-    //   external: [/^@rjsf\/core/, 'react', 'react-dom'],
-    // },
+    rollupOptions: {
+      treeshake: true,
+      // bundling @rjsf separately fixes the `vite build --watch` command from hanging!
+      external: [/^@rjsf\/core/, 'react', 'react-dom'],
+    },
   },
   server: {
-    https: !process.env?.VITEST,
     fs: {
       // Allow serving files from one level up to the project root
       allow: ['../..'],
@@ -44,39 +48,36 @@ export default defineConfig({
   plugins: [
     {
       name: 'watch-external', // https://stackoverflow.com/questions/63373804/rollup-watch-include-directory/63548394#63548394
-      async buildStart(options) {
-        const SvgMap = new Map();
+      async buildStart() {
+        const AssetsMap = new Map();
 
         if (isProduction) {
           const paths = await globby([
-            join(resolve(__dirname, 'src/components/icon'), '**/*.svg').replace(
-              /\\/g,
-              '/'
-            ),
+            join(resolve(__dirname, 'assets'), '**/*.png').replace(/\\/g, '/'),
           ]);
 
           paths.forEach((path) => {
-            const fileName = `'${basename(path).replace('.svg', '')}'`;
+            const fileName = `'${basename(path).replace('.png', '')}'`;
 
-            if (!SvgMap.has(fileName)) {
-              SvgMap.set(fileName, fileName);
+            if (!AssetsMap.has(fileName)) {
+              AssetsMap.set(fileName, fileName);
             }
           });
 
-          const result: string[] = Object.keys(Object.fromEntries(SvgMap)).map(
-            (icon) => `${icon} = ${icon}`
-          );
+          const result: string[] = Object.keys(
+            Object.fromEntries(AssetsMap)
+          ).map((asset) => `${asset} = ${asset}`);
 
           writeFileSync(
-            join(resolve(__dirname, 'src/components/icon'), 'icon.types.ts'),
+            join(resolve(__dirname, 'assets'), 'assets.types.ts'),
             prettier.format(
               `
-              // do not manually modify this auto-generated file!!
-              export enum Icons {
+              // auto gen
+              export enum Assets {
                 ${result.join(',')}
               }
 
-              export type IconName = keyof typeof Icons;
+              export type AssetName = keyof typeof Assets;
               `,
               {
                 parser: 'babel-ts',
@@ -89,39 +90,33 @@ export default defineConfig({
         } else {
           // Initialize watcher.
           const watcher = chokidar.watch(
-            join(resolve(__dirname, 'src/components/icon'), '**/*.svg').replace(
-              /\\/g,
-              '/'
-            )
+            join(resolve(__dirname, 'assets'), '**/*.png').replace(/\\/g, '/')
           );
 
           watcher.on('all', (eventName, path) => {
-            const fileName = `'${basename(path).replace('.svg', '')}'`;
+            const fileName = `'${basename(path).replace('.png', '')}'`;
 
-            if (eventName === 'add' && !SvgMap.has(fileName)) {
-              SvgMap.set(fileName, fileName);
-            } else if (eventName === 'unlink' && SvgMap.has(fileName)) {
-              SvgMap.delete(fileName);
+            if (eventName === 'add' && !AssetsMap.has(fileName)) {
+              AssetsMap.set(fileName, fileName);
+            } else if (eventName === 'unlink' && AssetsMap.has(fileName)) {
+              AssetsMap.delete(fileName);
             }
 
             if (eventName === 'add' || eventName === 'unlink') {
               const result: string[] = Object.keys(
-                Object.fromEntries(SvgMap)
-              ).map((icon) => `${icon} = ${icon}`);
+                Object.fromEntries(AssetsMap)
+              ).map((asset) => `${asset} = ${asset}`);
 
               writeFileSync(
-                join(
-                  resolve(__dirname, 'src/components/icon'),
-                  'icon.types.ts'
-                ),
+                join(resolve(__dirname, 'assets'), 'assets.types.ts'),
                 prettier.format(
                   `
-              // do not manually modify this auto-generated file!!
-              export enum Icons {
+              // auto gen
+              export enum Assets {
                 ${result.join(',')}
               }
 
-              export type IconName = keyof typeof Icons;
+              export type AssetName = keyof typeof Assets;
               `,
                   {
                     parser: 'babel-ts',

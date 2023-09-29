@@ -1,5 +1,6 @@
 import { useGameStore, GameStore } from '../../../store/store';
 import { Button } from '@prison-break-idle/design-system';
+import PixiComponent from './pixi-loader';
 
 export const Prison = () => {
   const stopGame = useGameStore((state: GameStore) => state.stopGame);

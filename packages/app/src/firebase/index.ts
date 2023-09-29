@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
 import {
   GoogleAuthProvider,
   getAuth,
@@ -17,7 +17,7 @@ const firebaseConfig = {
   measurementId: 'G-W9T2FT9KCG',
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -31,7 +31,7 @@ export const signIn = (token: string) => {
       const token = await user.getIdToken();
       localStorage.setItem('googleCredential', token);
 
-      await addUserToFirestore(user.uid, user.email);
+      await addUserToFirestore(user.uid, user.email, user.photoURL);
     })
     .catch((error) => {
       console.error('Signin error:', error);
@@ -47,12 +47,17 @@ export const signOut = async () => {
   }
 };
 
-const addUserToFirestore = async (uid: string, email: string) => {
+const addUserToFirestore = async (
+  uid: string,
+  email: string,
+  picture: string
+) => {
   const userRef = doc(db, 'users', uid);
   try {
     await setDoc(userRef, {
       uid,
       email,
+      picture,
     });
   } catch (error) {
     console.error('Error adding user to Firestore:', error);

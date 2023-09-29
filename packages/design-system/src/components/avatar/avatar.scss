@@ -3,12 +3,17 @@
 }
 
 .c-avatar {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 999; /* Adjust z-index as needed */
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: teal;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 
   &--size-small {
     width: 24px;
