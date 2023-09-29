@@ -1,17 +1,17 @@
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './index';
 import './index.scss';
-import '../design-system/src/components';
+import '@prison-break-idle/design-system';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-// import '../design-system/index.scss';
+const container = document.getElementById('app');
+const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 
 function render() {
-  ReactDOM.render(
+  root.render(
     <GoogleOAuthProvider clientId='392410655531-bivc0jk2ht627penukbit1ijp8an4jjm.apps.googleusercontent.com'>
       <App />
-    </GoogleOAuthProvider>,
-    document.body
+    </GoogleOAuthProvider>
   );
 }
 

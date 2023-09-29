@@ -7,13 +7,25 @@ export default {
 };
 
 export const HeaderText = () => {
-  return <Header>Header</Header>;
+  return (
+    <div style={{ background: 'black' }}>
+      <Header>Header</Header>
+    </div>
+  );
 };
 
 export const SubTextText = () => {
-  return <SubText>SubText</SubText>;
+  return (
+    <div style={{ background: 'black' }}>
+      <SubText>SubText</SubText>
+    </div>
+  );
 };
 
 export const TextComponent = () => {
-  return <Text>Text</Text>;
+  return (
+    <div style={{ background: 'black' }}>
+      <Text>Text</Text>
+    </div>
+  );
 };

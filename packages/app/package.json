@@ -7,12 +7,15 @@
   "license": "MIT",
   "scripts": {
     "start": "electron-forge start",
+    "start:vite": "vite dev",
+    "build:vite": "vite build",
     "build": "vite build && electron-builder",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish"
   },
   "dependencies": {
+    "@pixi/react": "^7.1.1",
     "@react-oauth/google": "^0.11.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -21,8 +24,10 @@
     "firebase-admin": "^11.10.1",
     "jwt-decode": "^3.1.2",
     "nx-electron": "^13.0.0",
+    "pixi.js": "^7.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-spinners": "^0.13.8",
     "zustand": "^4.4.1"
   },
   "devDependencies": {

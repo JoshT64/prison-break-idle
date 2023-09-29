@@ -1,0 +1,11 @@
+.c-container--display-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 16px; /* Adjust the gap between assets */
+}
+
+.c-container--display-default {
+  display: block;
+}

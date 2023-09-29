@@ -12,7 +12,10 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "paths": {
+      "*": ["*.tsx"]
+    }
   },
   "include": ["src"]
 }
