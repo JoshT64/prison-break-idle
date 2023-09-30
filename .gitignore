@@ -32,7 +32,7 @@ build/Release
 # Dependency directories
 node_modules/
 
-
+*packages/design-system/storybook-static
 # TypeScript v1 declaration files
 typings/
 
