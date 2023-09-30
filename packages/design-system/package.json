@@ -6,8 +6,6 @@
   "module": "./dist/design-system.js",
   "typings": "./dist/typings/index.d.ts",
   "exports": {
-    "./tokens": "./src/styles/core-styles/core-styles.scss",
-    "./global-styles": "./src/styles/global-styles/global-styles.scss",
     "./builded": {
       "module": "./dist/design-system.js",
       "types": "./dist/typings/index.d.ts"
@@ -34,17 +32,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "nx run-many --targets=lint:code,lint:styles,lint:stylelint --projects=@prison-break-idle/design-system",
-    "lint:code": "eslint --ext .tsx,.ts src/",
-    "lint:styles": "prettier --write ./src/**/*.scss",
-    "lint:stylelint": "stylelint ./**/*.scss",
-    "analyze": "wca analyze src --format vscode --outFile ./dist/vscode-html-custom-data.json",
-    "docs": "yarn run docs:vscode --silent",
-    "docs:md": "wca analyze src/**/*.wc.ts --format markdown --outFiles {dir}/README.md --features cssproperty",
-    "docs:vscode": "wca analyze src/**/*.wc.ts --format vscode --outFile ./dist/vscode-html-custom-data.json --verbose false",
-    "docs:schema": "wca analyze src/**/*.wc.ts --format json --outFiles {dir}/{tagname}.schema.json --verbose false",
-    "cypress-open": "cypress open",
-    "test-vitest": "vitest run --reporter=verbose",
-    "test": "yarn test-vitest && yarn test-components && yarn test-coverage"
+    "test": "yarn test"
   },
   "dependencies": {
     "clsx": "2.0.0",
