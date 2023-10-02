@@ -21,6 +21,8 @@ const App = () => {
       return <Loader />;
     }
 
+    // isGameStarted && newGame
+
     if (isGameStarted) {
       return <PixiLoader />;
     }

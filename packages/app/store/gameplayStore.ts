@@ -6,6 +6,8 @@ export type GameplayStore = {
   incrementDialogueStep: (step: number) => void;
 };
 
+export const NEW_GAME = 'NEW_GAME';
+
 export const useGameplayStore = create((set) => ({
   dialogueStep: 0,
   incrementDialogueStep: (step: number) => {
@@ -16,4 +18,5 @@ export const useGameplayStore = create((set) => ({
       console.log('Step exceeds dialogue length.');
     }
   },
+  checkpoint: NEW_GAME,
 }));

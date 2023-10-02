@@ -1,20 +1,10 @@
 import { Text } from '@pixi/react';
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect, ReactNode, useCallback } from 'react';
 import * as PIXI from 'pixi.js';
 import { useGameplayStore, GameplayStore } from '../../../store/gameplayStore';
 
-const width = 500;
-const height = 550;
-
-interface MessageProps {
-  dialogue: { step: number; text: string }[];
-  interval: number;
-  children?: (text: string) => ReactNode;
-}
-
-interface TextBubbleProps extends MessageProps {
-  step: number;
-}
+const defaultWidth = 550;
+const defaultHeight = 550;
 
 const style = new PIXI.TextStyle({
   fill: 'yellow',
@@ -32,6 +22,16 @@ const style = new PIXI.TextStyle({
   dropShadowDistance: 2,
   letterSpacing: 1,
 });
+
+interface MessageProps {
+  dialogue: { step: number; text: string }[];
+  interval: number;
+  children?: (text: string) => ReactNode;
+}
+
+interface TextBubbleProps extends MessageProps {
+  step: number;
+}
 
 const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
   const step = useGameplayStore((state: GameplayStore) => state.dialogueStep);
@@ -72,19 +72,43 @@ const TextBubble = ({ dialogue, interval, step }: TextBubbleProps) => {
     (state: GameplayStore) => state.incrementDialogueStep
   );
 
+  const handlePointerDown = useCallback(() => {
+    incrementDialogueStep(step);
+  }, [incrementDialogueStep, step]);
+
+  const getWindowDimensions = () => ({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const calculateTextPosition = () => {
+    const { width, height } = getWindowDimensions();
+
+    return {
+      x:
+        width > 1920
+          ? width / 2.45
+          : width > 1470
+          ? width / 2.47
+          : width < 1300
+          ? defaultWidth / 1.25
+          : defaultWidth,
+      y: height > 1000 ? defaultHeight / 1.4 : defaultHeight / 2,
+    };
+  };
+
+  const textPosition = calculateTextPosition();
+
   return (
     <Message dialogue={dialogue} interval={interval}>
       {(text: string) => (
         <Text
           text={text}
-          x={width + 30}
-          y={height / 2}
+          {...textPosition}
           anchor={0}
           style={style}
           interactive
-          pointerdown={() => {
-            incrementDialogueStep(step);
-          }}
+          pointerdown={handlePointerDown}
         />
       )}
     </Message>
