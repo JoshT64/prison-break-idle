@@ -8,7 +8,7 @@ export type DbStore = {
   accountDetails: { picture: string } | null;
 };
 
-export const useDbStore = create<DbStore>((set) => {
+export const useDbStore = create((set) => {
   const db = getFirestore(app);
   const auth = getAuth(app);
   let uid;

@@ -12,23 +12,19 @@ const myRefreshToken = './refreshToken.json';
 
 admin.initializeApp({
   credential: admin.credential.cert(myRefreshToken),
-  //   databaseURL: 'https://prison-break-idle.firebaseio.com',
 });
 
 // Endpoint to verify the Google credential
 app.post('/verify-google-credential', (req, res) => {
   const googleCredential = req.body.token;
 
-  // Verify the ID token
   admin
     .auth()
     .verifyIdToken(googleCredential)
     .then((decodedToken) => {
-      // The ID token is valid, respond with success
       res.status(200).send({ success: true });
     })
     .catch((error) => {
-      // Verification failed, respond with error
       console.error('ID token verification failed:', error);
       res.status(400).send({ success: false });
     });

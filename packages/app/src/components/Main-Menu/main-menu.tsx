@@ -1,11 +1,13 @@
 import { useGameStore, GameStore } from '../../../store/store';
 import {
+  Asset,
   Avatar,
   Button,
   Container,
   Header,
 } from '@prison-break-idle/design-system';
 import { AppBar } from '../app-bar';
+import playeridle from '../../../../design-system/assets/playeridle.png';
 
 export const MainMenu = () => {
   const saveData = true;
@@ -17,6 +19,8 @@ export const MainMenu = () => {
       <AppBar />
       <Header>Prison Break Idle</Header>
       <div className='c-main-menu--button-container'>
+        <Asset animation='bounce' size='medium' src={playeridle}></Asset>
+
         <Button onClick={startGame}>New Game</Button>
         {saveData && (
           <Button

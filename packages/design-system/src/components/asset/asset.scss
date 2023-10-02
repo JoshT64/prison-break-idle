@@ -21,3 +21,28 @@
 .c-asset--size-3xlarge {
   width: 64px;
 }
+
+.c-asset--animation-bounce {
+  animation: bounceAnimation 2s infinite; /* 2s duration, infinite loop */
+}
+
+@keyframes bounceAnimation {
+  0%,
+  100% {
+    transform: translateY(
+      0
+    ); /* Starting and ending position (no translation) */
+  }
+  20% {
+    transform: translateY(-1px); /* Initial bounce up */
+  }
+  50% {
+    transform: translateY(0); /* Return to original position */
+  }
+  70% {
+    transform: translateY(-1px); /* Return to original position */
+  }
+  90% {
+    transform: translateY(0); /* Slight bounce up again */
+  }
+}

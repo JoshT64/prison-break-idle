@@ -1,20 +1,22 @@
 import { clsx } from 'clsx';
-import { AssetName } from '../../../assets/assets.types';
 import './asset.scss';
 
 interface AssetProps extends React.ImgHTMLAttributes<HTMLSpanElement> {
   size?: 'small' | 'medium' | 'large' | 'xlarge' | '2xlarge' | '3xlarge';
   label?: string;
-  src: AssetName;
+  src: string;
+  animation?: 'bounce' | 'default';
 }
 
-export const Asset = ({ size, src, label }: AssetProps) => {
-  const assetSrc = `../../../assets/${src}.png`;
+const isStorybook = window.location.host.includes('6006');
+
+export const Asset = ({ size, src, label, animation }: AssetProps) => {
+  const assetSrc = isStorybook ? `../../../assets/${src}.png` : `${src}`;
 
   return (
-    <span className={clsx(`c-asset `)}>
+    <span className={clsx(`c-asset`)}>
       <img
-        className={`c-avatar__img c-asset--size-${size}`}
+        className={`c-asset--size-${size} c-asset--animation-${animation}`}
         src={assetSrc}
         alt={label}
       />
