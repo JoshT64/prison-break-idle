@@ -93,7 +93,7 @@ const TextBubble = ({ dialogue, interval, step }: TextBubbleProps) => {
           : width < 1300
           ? defaultWidth / 1.25
           : defaultWidth,
-      y: height > 1000 ? defaultHeight / 1.4 : defaultHeight / 2,
+      y: height > 1000 ? defaultHeight / 1 : defaultHeight / 2,
     };
   };
 
