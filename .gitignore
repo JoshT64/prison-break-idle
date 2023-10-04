@@ -31,8 +31,8 @@ build/Release
 
 # Dependency directories
 node_modules/
-jspm_packages/
 
+*packages/design-system/storybook-static
 # TypeScript v1 declaration files
 typings/
 
@@ -45,11 +45,9 @@ typings/
 # Optional eslint cache
 .eslintcache
 
-# Optional REPL history
-.node_repl_history
 
-# Output of 'npm pack'
-*.tgz
+
+
 
 # Yarn Integrity file
 .yarn-integrity
@@ -66,18 +64,12 @@ typings/
 
 # nuxt.js build output
 .nuxt
+packages/app/dist
+.dist
 
-# vuepress build output
-.vuepress/dist
 
-# Serverless directories
-.serverless/
 
-# FuseBox cache
-.fusebox/
 
-# DynamoDB Local files
-.dynamodb/
 
 # Webpack
 .webpack/
@@ -87,3 +79,4 @@ typings/
 
 # Electron-Forge
 out/
+.vercel

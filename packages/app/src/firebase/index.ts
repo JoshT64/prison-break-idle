@@ -30,8 +30,18 @@ export const signIn = (token: string) => {
       console.log('User signed in:', user.uid);
       const token = await user.getIdToken();
       localStorage.setItem('googleCredential', token);
-
-      await addUserToFirestore(user.uid, user.email, user.photoURL);
+      // Todo: Update resource db
+      const resources = {
+        rocks: 0,
+      };
+      const saveData = {};
+      await addUserToFirestore(
+        user.uid,
+        user.email,
+        user.photoURL,
+        resources,
+        saveData
+      );
     })
     .catch((error) => {
       console.error('Signin error:', error);
@@ -50,7 +60,9 @@ export const signOut = async () => {
 const addUserToFirestore = async (
   uid: string,
   email: string,
-  picture: string
+  picture: string,
+  resources: object,
+  saveData: object
 ) => {
   const userRef = doc(db, 'users', uid);
   try {
@@ -58,6 +70,7 @@ const addUserToFirestore = async (
       uid,
       email,
       picture,
+      resources,
     });
   } catch (error) {
     console.error('Error adding user to Firestore:', error);

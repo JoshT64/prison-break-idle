@@ -5,10 +5,15 @@ import 'firebase/auth';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export type DbStore = {
-  accountDetails: { picture: string } | null;
+  accountDetails: {
+    picture: string;
+    resources: {
+      rocks: number;
+    };
+  } | null;
 };
 
-export const useDbStore = create<DbStore>((set) => {
+export const useDbStore = create((set) => {
   const db = getFirestore(app);
   const auth = getAuth(app);
   let uid;
@@ -32,8 +37,14 @@ export const useDbStore = create<DbStore>((set) => {
 
       if (accountSnapshot.exists()) {
         const accountData = accountSnapshot.data();
-        console.log('Fetched account data:', accountData);
-        set({ accountDetails: { picture: accountData.picture || '' } });
+        console.log('Fetched account data');
+        set({
+          accountDetails: {
+            picture: accountData.picture || '',
+            resources: accountData.resources,
+            saveData: accountData.saveData,
+          },
+        });
       } else {
         console.log('Account data does not exist.');
         set({ accountDetails: { picture: '' } });

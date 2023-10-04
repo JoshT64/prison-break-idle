@@ -6,13 +6,13 @@
   "author": "josh",
   "license": "MIT",
   "scripts": {
-    "start": "electron-forge start",
-    "start:vite": "vite dev",
-    "build:vite": "vite build",
-    "build": "vite build && electron-builder",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
+    "start:electron": "electron-forge start",
+    "start": "vite dev",
+    "build": "vite build",
+    "build:electron": "vite build && electron-builder",
+    "package:electron": "electron-forge package",
+    "make:electron": "electron-forge make",
+    "publish:electron": "electron-forge publish"
   },
   "dependencies": {
     "@pixi/react": "^7.1.1",
@@ -25,6 +25,7 @@
     "jwt-decode": "^3.1.2",
     "nx-electron": "^13.0.0",
     "pixi.js": "^7.3.1",
+    "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-spinners": "^0.13.8",
