@@ -25,6 +25,7 @@
     "jwt-decode": "^3.1.2",
     "nx-electron": "^13.0.0",
     "pixi.js": "^7.3.1",
+    "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-spinners": "^0.13.8",

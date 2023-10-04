@@ -1,4 +1,5 @@
 // auto gen
+
 export enum Assets {
   'bed' = 'bed',
   'board' = 'board',
@@ -34,6 +35,7 @@ export enum Assets {
   'playerrun1' = 'playerrun1',
   'playerrun2' = 'playerrun2',
   'popup' = 'popup',
+  'rocks' = 'rocks',
   'shadow' = 'shadow',
   'table1' = 'table1',
   'table2' = 'table2',

@@ -5,7 +5,12 @@ import 'firebase/auth';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export type DbStore = {
-  accountDetails: { picture: string } | null;
+  accountDetails: {
+    picture: string;
+    resources: {
+      rocks: number;
+    };
+  } | null;
 };
 
 export const useDbStore = create((set) => {
@@ -33,7 +38,13 @@ export const useDbStore = create((set) => {
       if (accountSnapshot.exists()) {
         const accountData = accountSnapshot.data();
         console.log('Fetched account data');
-        set({ accountDetails: { picture: accountData.picture || '' } });
+        set({
+          accountDetails: {
+            picture: accountData.picture || '',
+            resources: accountData.resources,
+            saveData: accountData.saveData,
+          },
+        });
       } else {
         console.log('Account data does not exist.');
         set({ accountDetails: { picture: '' } });
