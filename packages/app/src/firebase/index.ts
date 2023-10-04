@@ -17,6 +17,11 @@ const firebaseConfig = {
   measurementId: 'G-W9T2FT9KCG',
 };
 
+interface Resources {
+  rocks?: number;
+  gems?: number;
+}
+
 export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -30,18 +35,17 @@ export const signIn = (token: string) => {
       console.log('User signed in:', user.uid);
       const token = await user.getIdToken();
       localStorage.setItem('googleCredential', token);
-      // Todo: Update resource db
-      const resources = {
-        rocks: 0,
-      };
-      const saveData = {};
-      await addUserToFirestore(
-        user.uid,
-        user.email,
-        user.photoURL,
-        resources,
-        saveData
-      );
+
+      // Fetch resources from Firestore
+      const accountRef = doc(db, 'users', user.uid);
+      const accountSnapshot = await getDoc(accountRef);
+
+      let resources: Resources = {};
+      if (accountSnapshot.exists() && accountSnapshot.data()) {
+        resources = accountSnapshot.data().resources;
+      }
+
+      await addUserToFirestore(user.uid, user.email, user.photoURL, resources);
     })
     .catch((error) => {
       console.error('Signin error:', error);
@@ -61,8 +65,7 @@ const addUserToFirestore = async (
   uid: string,
   email: string,
   picture: string,
-  resources: object,
-  saveData: object
+  resources: { rocks?: number; gems?: number }
 ) => {
   const userRef = doc(db, 'users', uid);
   try {

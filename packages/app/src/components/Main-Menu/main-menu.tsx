@@ -1,4 +1,7 @@
 import { useGameStore, GameStore } from '../../../store/store';
+import { useGameplayStore, GameplayStore } from '../../../store/gameplayStore';
+import { useDbStore, DbStore } from '../../../store/dbStore';
+
 import {
   Asset,
   Avatar,
@@ -10,9 +13,17 @@ import { AppBar } from '../app-bar';
 import playeridle from '../../../../design-system/assets/playeridle.png';
 
 export const MainMenu = () => {
-  const saveData = true;
+  let saveData = true;
   const startGame = useGameStore((state: GameStore) => state.startGame);
   const logout = useGameStore((state: GameStore) => state.logout);
+  const resetDialogueStep = useGameplayStore(
+    (state: GameplayStore) => state.resetDialogueStep
+  );
+
+  const newGame = () => {
+    startGame();
+    resetDialogueStep();
+  };
 
   return (
     <div>
@@ -22,7 +33,7 @@ export const MainMenu = () => {
         <div className='c-main-menu--button-container'>
           <Asset animation='bounce' size='medium' src={playeridle}></Asset>
 
-          <Button onClick={startGame}>New Game</Button>
+          <Button onClick={newGame}>New Game</Button>
           {saveData && (
             <Button
               onClick={startGame}

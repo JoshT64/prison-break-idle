@@ -60,10 +60,13 @@ export default defineConfig({
           const content = await prettier.format(
             `
             ${importStatements.join('\n')}
+            import { Assets } from '../../../design-system/assets/assets.types';
 
-            interface AssetMapping {
-              [key: string]: string;
+            type AssetMapping = {
+              [key in Assets]: string;
             }
+
+
 
             export const assetMapping: AssetMapping = {
               ${assetMappingEntries.join('\n')}

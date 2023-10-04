@@ -1,12 +1,14 @@
 // auto gen
-
 export enum Assets {
+  'arrowdown' = 'arrowdown',
+  'arrowup' = 'arrowup',
   'bed' = 'bed',
   'board' = 'board',
   'box' = 'box',
   'camera' = 'camera',
   'celldoor' = 'celldoor',
   'celldoor2' = 'celldoor2',
+  'comingsoon' = 'comingsoon',
   'cop2idle' = 'cop2idle',
   'cop2run1' = 'cop2run1',
   'cop2run2' = 'cop2run2',
@@ -18,6 +20,7 @@ export enum Assets {
   'doorgreen' = 'doorgreen',
   'doorholder' = 'doorholder',
   'doorred' = 'doorred',
+  'gems' = 'gems',
   'ground' = 'ground',
   'key' = 'key',
   'keyblue' = 'keyblue',

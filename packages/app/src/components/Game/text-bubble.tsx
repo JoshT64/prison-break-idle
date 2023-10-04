@@ -10,7 +10,7 @@ const style = new PIXI.TextStyle({
   fill: 'yellow',
   fontSize: 40,
   fontFamily: 'Gamestation',
-  align: 'left',
+  align: 'justify',
   stroke: '#687500',
   strokeThickness: 1,
   wordWrap: true,
@@ -35,8 +35,14 @@ interface TextBubbleProps extends MessageProps {
 
 const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
   const step = useGameplayStore((state: GameplayStore) => state.dialogueStep);
+
+  const onDialogEnd = useGameplayStore(
+    (state: GameplayStore) => state.onDialogEnd
+  );
+
   const dialogueChars = () =>
     dialogue[step]?.text.split('').concat([...Array(10)].map(() => ''));
+
   const [textState, setTextState] = useState({
     text: '',
     rest: dialogueChars(),
@@ -44,10 +50,10 @@ const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
 
   useEffect(() => {
     let i: NodeJS.Timeout;
-
     const update = () => {
       setTextState(({ text, rest }) => {
         if (rest?.length === 0) {
+          onDialogEnd(true);
           clearInterval(i);
           return { text, rest };
         }
@@ -59,6 +65,7 @@ const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
     setTextState({ text: '', rest: dialogueChars() }); // Update textState when step changes
 
     i = setInterval(update, interval);
+
     return () => {
       clearInterval(i);
     };
@@ -72,7 +79,12 @@ const TextBubble = ({ dialogue, interval, step }: TextBubbleProps) => {
     (state: GameplayStore) => state.incrementDialogueStep
   );
 
+  const onDialogEnd = useGameplayStore(
+    (state: GameplayStore) => state.onDialogEnd
+  );
+
   const handlePointerDown = useCallback(() => {
+    onDialogEnd(false);
     incrementDialogueStep(step);
   }, [incrementDialogueStep, step]);
 
@@ -109,6 +121,7 @@ const TextBubble = ({ dialogue, interval, step }: TextBubbleProps) => {
           style={style}
           interactive
           pointerdown={handlePointerDown}
+          cursor='pointer'
         />
       )}
     </Message>
