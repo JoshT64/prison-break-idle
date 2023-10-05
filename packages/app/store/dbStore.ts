@@ -1,19 +1,37 @@
-// External Libraries
 import { create } from 'zustand';
 import { MouseEventHandler } from 'react';
-
-// Firebase Libraries
+import { initializeApp } from 'firebase/app';
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithCredential,
+  onAuthStateChanged,
+  signOut as signOutFirebase,
+} from 'firebase/auth';
 import {
   getFirestore,
   doc,
   getDoc,
   updateDoc,
   increment,
+  setDoc,
 } from 'firebase/firestore';
-import { app } from '../src/firebase/index';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import 'firebase/auth';
 
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+};
+// App initialization
+export const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Types and Interfaces
 export type DbStore = {
   accountDetails: {
     picture: string;
@@ -24,7 +42,10 @@ export type DbStore = {
 };
 
 type ResourceKey = 'rocks' | 'gems';
-
+interface Resources {
+  rocks?: number;
+  gems?: number;
+}
 export interface ResourceTypes {
   incrementResource: (
     resource: ResourceKey,
@@ -32,6 +53,61 @@ export interface ResourceTypes {
   ) => MouseEventHandler<HTMLButtonElement>;
 }
 
+// Auth functions
+export const signIn = async (token: string) => {
+  const credential = GoogleAuthProvider.credential(token);
+  try {
+    const userCredential = await signInWithCredential(auth, credential);
+    const user = userCredential.user;
+    console.log('User signed in:', user.uid);
+    const idToken = await user.getIdToken();
+    localStorage.setItem('googleCredential', idToken);
+
+    const resources = await fetchResourcesForUser(user.uid);
+    await addUserToFirestore(user.uid, user.email, user.photoURL, resources);
+  } catch (error) {
+    console.error('Signin error:', error);
+  }
+};
+
+export const signOut = async () => {
+  try {
+    await signOutFirebase(auth);
+    console.log('User signed out');
+  } catch (error) {
+    console.error('Sign out error:', error);
+  }
+};
+
+const fetchResourcesForUser = async (uid: string): Promise<Resources> => {
+  const accountRef = doc(db, 'users', uid);
+  const accountSnapshot = await getDoc(accountRef);
+
+  return accountSnapshot.exists() && accountSnapshot.data()
+    ? (accountSnapshot.data().resources as Resources)
+    : {};
+};
+
+const addUserToFirestore = async (
+  uid: string,
+  email: string,
+  picture: string,
+  resources: Resources
+) => {
+  const userRef = doc(db, 'users', uid);
+  try {
+    await setDoc(userRef, {
+      uid,
+      email,
+      picture,
+      resources,
+    });
+  } catch (error) {
+    console.error('Error adding user to Firestore:', error);
+  }
+};
+
+// Zustand store
 export const useDbStore = create((set) => {
   const db = getFirestore(app);
   const auth = getAuth(app);
@@ -46,7 +122,7 @@ export const useDbStore = create((set) => {
 
   // Authentication state changes listener to get the UID
   const initAuthStateListener = () => {
-    return onAuthStateChanged(auth, (user) => {
+    return onAuthStateChanged(auth, (user: { uid: string }) => {
       if (user) {
         uid = user.uid;
         fetchAccountData(uid);
@@ -72,7 +148,7 @@ export const useDbStore = create((set) => {
   };
 
   const setAccountData = (accountData: any) => {
-    console.log('Fetched account data');
+    console.log('Fetched account data', accountData);
     set({
       accountDetails: {
         picture: accountData.picture || '',
@@ -95,7 +171,8 @@ export const useDbStore = create((set) => {
     if (updateTimeout) {
       clearTimeout(updateTimeout);
     }
-    updateTimeout = setTimeout(performFirestoreUpdate, 60 * 100);
+    console.log('firestore update');
+    updateTimeout = setTimeout(performFirestoreUpdate, 60 * 1000);
   };
 
   const performFirestoreUpdate = async () => {
@@ -127,6 +204,7 @@ export const useDbStore = create((set) => {
       console.error('No user is authenticated.');
       return;
     }
+    console.log(resource, accumulatedIncrements);
     accumulatedIncrements[resource] += 1;
     scheduleFirestoreUpdate();
     if (autoGen) {

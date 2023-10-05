@@ -1,10 +1,7 @@
 import { Text } from '@pixi/react';
-import { useState, useEffect, ReactNode, useCallback } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import * as PIXI from 'pixi.js';
-import { useGameplayStore, GameplayStore } from '../../../store/gameplayStore';
-
-const defaultWidth = 550;
-const defaultHeight = 550;
+import { useGameplay } from './hooks/useGameplay';
 
 const style = new PIXI.TextStyle({
   fill: 'yellow',
@@ -33,12 +30,8 @@ interface TextBubbleProps extends MessageProps {
   step: number;
 }
 
-const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
-  const step = useGameplayStore((state: GameplayStore) => state.dialogueStep);
-
-  const onDialogEnd = useGameplayStore(
-    (state: GameplayStore) => state.onDialogEnd
-  );
+export const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
+  const { step, onDialogEnd } = useGameplay();
 
   const dialogueChars = () =>
     dialogue[step]?.text.split('').concat([...Array(10)].map(() => ''));
@@ -75,39 +68,7 @@ const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
 };
 
 const TextBubble = ({ dialogue, interval, step }: TextBubbleProps) => {
-  const incrementDialogueStep = useGameplayStore(
-    (state: GameplayStore) => state.incrementDialogueStep
-  );
-
-  const onDialogEnd = useGameplayStore(
-    (state: GameplayStore) => state.onDialogEnd
-  );
-
-  const handlePointerDown = useCallback(() => {
-    onDialogEnd(false);
-    incrementDialogueStep(step);
-  }, [incrementDialogueStep, step]);
-
-  const getWindowDimensions = () => ({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  const calculateTextPosition = () => {
-    const { width, height } = getWindowDimensions();
-
-    return {
-      x:
-        width > 1920
-          ? width / 2.45
-          : width > 1470
-          ? width / 2.47
-          : width < 1300
-          ? defaultWidth / 1.25
-          : defaultWidth,
-      y: height > 1000 ? defaultHeight / 1 : defaultHeight / 2,
-    };
-  };
+  const { handlePointerDown, calculateTextPosition } = useGameplay();
 
   const textPosition = calculateTextPosition();
 

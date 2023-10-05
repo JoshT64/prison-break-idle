@@ -1,7 +1,3 @@
-import { useGameStore, GameStore } from '../../../store/store';
-import { useGameplayStore, GameplayStore } from '../../../store/gameplayStore';
-import { useDbStore, DbStore } from '../../../store/dbStore';
-
 import {
   Asset,
   Avatar,
@@ -11,19 +7,10 @@ import {
 } from '@prison-break-idle/design-system';
 import { AppBar } from '../app-bar';
 import playeridle from '../../../../design-system/assets/playeridle.png';
+import { useStore } from './useStore';
 
 export const MainMenu = () => {
-  let saveData = true;
-  const startGame = useGameStore((state: GameStore) => state.startGame);
-  const logout = useGameStore((state: GameStore) => state.logout);
-  const resetDialogueStep = useGameplayStore(
-    (state: GameplayStore) => state.resetDialogueStep
-  );
-
-  const newGame = () => {
-    startGame();
-    resetDialogueStep();
-  };
+  const { startGame, logout, newGame, saveData } = useStore();
 
   return (
     <div>

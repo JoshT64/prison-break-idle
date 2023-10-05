@@ -1,4 +1,4 @@
-import { signIn, signOut } from '../src/firebase/index';
+import { signIn, signOut } from '../store/dbStore';
 import { create } from 'zustand';
 
 const token = localStorage.getItem('googleCredential');
@@ -31,7 +31,7 @@ const verifyGoogleCredential = async () => {
   }
 };
 
-export type GameStore = {
+export type MainStore = {
   isGameStarted: boolean;
   startGame?: () => void;
   stopGame?: () => void;
@@ -40,7 +40,7 @@ export type GameStore = {
   logout?: () => void;
 };
 
-export const useGameStore = create((set) => ({
+export const useMainStore = create((set) => ({
   startGame: () => set({ isGameStarted: true }),
   stopGame: () => set({ isGameStarted: false }),
   isGameStarted: false,

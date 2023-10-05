@@ -1,23 +1,15 @@
 import { useState } from 'react';
-import { useGameStore, GameStore } from '../../../store/store';
 import { Asset, Button, Container } from '@prison-break-idle/design-system';
-import { useDbStore, DbStore, ResourceTypes } from '../../../store/dbStore';
 import { AppBar } from '../app-bar';
 import { assetMapping } from '../../assets/assetMappings';
+import { useUserData } from './hooks/useUserData';
+import { useStore } from '../main-menu/useStore';
 
 export const Prison = () => {
-  const stopGame = useGameStore((state: GameStore) => state.stopGame);
-
-  const resources = useDbStore(
-    (state: DbStore) => state.accountDetails.resources
-  );
-
-  const incrementResource = useDbStore(
-    (state: ResourceTypes) => state.incrementResource
-  );
+  const { resources, incrementResource } = useUserData();
+  const { stopGame } = useStore();
 
   const [openPause, setOpenPause] = useState(false);
-
   document.addEventListener(
     'keydown',
     (e) => e.key === 'Escape' && setOpenPause(!openPause)
