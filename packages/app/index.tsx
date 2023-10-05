@@ -1,19 +1,17 @@
 import { MainMenu } from './src/components/main-menu';
-import { useGameStore, GameStore } from './store/store';
 import { Login } from './src/components/login';
-import { useDbStore, DbStore } from './store/dbStore';
 import { Loader } from './src/components/loader';
-import PixiLoader from './src/components/game/pixi-loader';
-import { useGameplayStore, GameplayStore } from './store/gameplayStore';
+import PixiLoader from './src/components/game/pixi-loader/pixi-loader';
 import { Prison } from './src/components/game';
+import { useStore } from './src/components/main-menu/useStore';
+import { useUserData } from './src/components/game/hooks/useUserData';
+import { useDbStore } from './store/dbStore';
+import { useGameplay } from './src/components/game/pixi-loader/hooks/useGameplay';
 
 const App = () => {
-  const isGameStarted = useGameStore((state: GameStore) => state.isGameStarted);
-  const isLoggedIn = useGameStore((state: GameStore) => state.isLoggedIn);
-  const accountDetails = useDbStore((state: DbStore) => state.accountDetails);
-  const isDialogueDone = useGameplayStore(
-    (state: GameplayStore) => state.dialogueDone
-  );
+  const { isLoggedIn, isGameStarted } = useStore();
+  const { accountDetails } = useUserData();
+  const { isDialogueDone } = useGameplay();
 
   // Todo: Add React-router and route based on url to these pages? I think so
 
@@ -25,7 +23,6 @@ const App = () => {
     if (!accountDetails) {
       return <Loader />;
     }
-
     // isGameStarted && newGame
 
     if (isGameStarted && !isDialogueDone) {

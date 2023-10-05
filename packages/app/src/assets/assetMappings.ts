@@ -1,9 +1,12 @@
+import arrowdown from '../../../design-system/assets/arrowdown.png';
+import arrowup from '../../../design-system/assets/arrowup.png';
 import bed from '../../../design-system/assets/bed.png';
 import board from '../../../design-system/assets/board.png';
 import box from '../../../design-system/assets/box.png';
 import camera from '../../../design-system/assets/camera.png';
 import celldoor from '../../../design-system/assets/celldoor.png';
 import celldoor2 from '../../../design-system/assets/celldoor2.png';
+import comingsoon from '../../../design-system/assets/comingsoon.png';
 import cop2idle from '../../../design-system/assets/cop2idle.png';
 import cop2run1 from '../../../design-system/assets/cop2run1.png';
 import cop2run2 from '../../../design-system/assets/cop2run2.png';
@@ -15,6 +18,7 @@ import doorblue from '../../../design-system/assets/doorblue.png';
 import doorgreen from '../../../design-system/assets/doorgreen.png';
 import doorholder from '../../../design-system/assets/doorholder.png';
 import doorred from '../../../design-system/assets/doorred.png';
+import gems from '../../../design-system/assets/gems.png';
 import ground from '../../../design-system/assets/ground.png';
 import key from '../../../design-system/assets/key.png';
 import keyblue from '../../../design-system/assets/keyblue.png';
@@ -48,12 +52,15 @@ type AssetMapping = {
 };
 
 export const assetMapping: AssetMapping = {
+  arrowdown,
+  arrowup,
   bed,
   board,
   box,
   camera,
   celldoor,
   celldoor2,
+  comingsoon,
   cop2idle,
   cop2run1,
   cop2run2,
@@ -65,6 +72,7 @@ export const assetMapping: AssetMapping = {
   doorgreen,
   doorholder,
   doorred,
+  gems,
   ground,
   key,
   keyblue,

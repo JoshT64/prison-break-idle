@@ -1,9 +1,10 @@
 import { GoogleLogin } from '@react-oauth/google';
-import { GameStore, useGameStore } from '../../../store/store';
 import { Container } from '@prison-break-idle/design-system';
+import { useStore } from '../main-menu/useStore';
 
 export const Login = () => {
-  const login = useGameStore((state: GameStore) => state.login);
+  const { login } = useStore();
+
   return (
     <Container>
       Login

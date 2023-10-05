@@ -1,4 +1,3 @@
-import { useGameStore, GameStore } from '../../../store/store';
 import {
   Asset,
   Avatar,
@@ -8,11 +7,10 @@ import {
 } from '@prison-break-idle/design-system';
 import { AppBar } from '../app-bar';
 import playeridle from '../../../../design-system/assets/playeridle.png';
+import { useStore } from './useStore';
 
 export const MainMenu = () => {
-  const saveData = true;
-  const startGame = useGameStore((state: GameStore) => state.startGame);
-  const logout = useGameStore((state: GameStore) => state.logout);
+  const { startGame, logout, newGame, saveData } = useStore();
 
   return (
     <div>
@@ -22,7 +20,7 @@ export const MainMenu = () => {
         <div className='c-main-menu--button-container'>
           <Asset animation='bounce' size='medium' src={playeridle}></Asset>
 
-          <Button onClick={startGame}>New Game</Button>
+          <Button onClick={newGame}>New Game</Button>
           {saveData && (
             <Button
               onClick={startGame}

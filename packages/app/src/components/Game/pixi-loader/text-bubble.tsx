@@ -1,16 +1,13 @@
 import { Text } from '@pixi/react';
-import { useState, useEffect, ReactNode, useCallback } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import * as PIXI from 'pixi.js';
-import { useGameplayStore, GameplayStore } from '../../../store/gameplayStore';
-
-const defaultWidth = 550;
-const defaultHeight = 550;
+import { useGameplay } from './hooks/useGameplay';
 
 const style = new PIXI.TextStyle({
   fill: 'yellow',
   fontSize: 40,
   fontFamily: 'Gamestation',
-  align: 'left',
+  align: 'justify',
   stroke: '#687500',
   strokeThickness: 1,
   wordWrap: true,
@@ -33,10 +30,12 @@ interface TextBubbleProps extends MessageProps {
   step: number;
 }
 
-const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
-  const step = useGameplayStore((state: GameplayStore) => state.dialogueStep);
+export const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
+  const { step, onDialogEnd } = useGameplay();
+
   const dialogueChars = () =>
     dialogue[step]?.text.split('').concat([...Array(10)].map(() => ''));
+
   const [textState, setTextState] = useState({
     text: '',
     rest: dialogueChars(),
@@ -44,10 +43,10 @@ const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
 
   useEffect(() => {
     let i: NodeJS.Timeout;
-
     const update = () => {
       setTextState(({ text, rest }) => {
         if (rest?.length === 0) {
+          onDialogEnd(true);
           clearInterval(i);
           return { text, rest };
         }
@@ -59,6 +58,7 @@ const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
     setTextState({ text: '', rest: dialogueChars() }); // Update textState when step changes
 
     i = setInterval(update, interval);
+
     return () => {
       clearInterval(i);
     };
@@ -68,34 +68,7 @@ const Message = ({ dialogue, interval = 0, children }: MessageProps) => {
 };
 
 const TextBubble = ({ dialogue, interval, step }: TextBubbleProps) => {
-  const incrementDialogueStep = useGameplayStore(
-    (state: GameplayStore) => state.incrementDialogueStep
-  );
-
-  const handlePointerDown = useCallback(() => {
-    incrementDialogueStep(step);
-  }, [incrementDialogueStep, step]);
-
-  const getWindowDimensions = () => ({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  const calculateTextPosition = () => {
-    const { width, height } = getWindowDimensions();
-
-    return {
-      x:
-        width > 1920
-          ? width / 2.45
-          : width > 1470
-          ? width / 2.47
-          : width < 1300
-          ? defaultWidth / 1.25
-          : defaultWidth,
-      y: height > 1000 ? defaultHeight / 1 : defaultHeight / 2,
-    };
-  };
+  const { handlePointerDown, calculateTextPosition } = useGameplay();
 
   const textPosition = calculateTextPosition();
 
@@ -109,6 +82,7 @@ const TextBubble = ({ dialogue, interval, step }: TextBubbleProps) => {
           style={style}
           interactive
           pointerdown={handlePointerDown}
+          cursor='pointer'
         />
       )}
     </Message>
